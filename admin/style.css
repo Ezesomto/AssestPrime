@@ -1,0 +1,362 @@
+:root {
+            --primary-red: #e63946;
+            --primary-blue: #2bb7fd;
+            --primary-seablue: #123043;
+            --accent-gray: #98fb2e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+/* Animation Container */
+        .animation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-seablue);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .crypto-ball {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--accent-gray), var(--primary-blue));
+            border-radius: 50%;
+            position: relative;
+            animation: roll 2s forwards, expand 1s 2s forwards, burst 0.5s 3s forwards;
+            box-shadow: 0 0 20px var(--accent-gray);
+        }
+        
+        @keyframes roll {
+            0% { transform: translateX(-100vw) rotate(0deg); }
+            100% { transform: translateX(0) rotate(720deg); }
+        }
+        
+        @keyframes expand {
+            0% { transform: scale(1); }
+            100% { transform: scale(10); opacity: 0.8; }
+        }
+        
+        @keyframes burst {
+            0% { transform: scale(10); opacity: 0.8; }
+            100% { transform: scale(20); opacity: 0; }
+        }
+
+
+
+
+/* Base Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Preloader Animation */
+#preloader {
+    transition: opacity 0.5s ease;
+}
+
+.loader {
+    display: flex;
+    gap: 6px;
+}
+
+.loader .line {
+    height: 20px;
+    width: 6px;
+    background: linear-gradient(to top, #10B981, #3B82F6);
+    border-radius: 10px;
+    animation: bounce 1.5s infinite ease-in-out;
+}
+
+.loader .line:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.loader .line:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loader .line:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: scaleY(0.5);
+    }
+    50% {
+        transform: scaleY(1.5);
+    }
+}
+
+/* Live Crypto Ticker */
+.ticker-container {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ticker-track {
+    animation: ticker 30s linear infinite;
+    display: inline-block;
+}
+
+.ticker-item {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 2rem;
+}
+
+.ticker-item img {
+    width: 16px;
+    height: 16px;
+    margin-right: 0.5rem;
+}
+
+@keyframes ticker {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Navigation */
+.nav-link {
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #10B981;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Theme Toggle */
+.dark-mode body {
+    background-color: #111827;
+    color: #F3F4F6;
+}
+
+/* Card Animations */
+.feature-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.plan-card:hover {
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Calculator Animations */
+.result-item:hover {
+    transform: translateX(5px);
+}
+
+/* Form Animations */
+.form-input:focus {
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+/* Dashboard Animations */
+.dashboard-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Investment Status Animation */
+.investment-card:hover .progress-bar {
+    transform: scaleX(1.05);
+}
+
+/* Admin Animations */
+.admin-stats-card:hover {
+    transform: translateY(-5px);
+}
+
+.pending-item:hover {
+    transform: translateX(5px);
+}
+
+.user-item:hover {
+    transform: translateX(5px);
+}
+
+/* Floating Button Animation */
+.floating-button {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .ticker-item {
+        margin-right: 1.5rem;
+    }
+    
+    .feature-card, .plan-card, .testimonial-card {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Dark Mode Overrides */
+.dark-mode .bg-gray-100 {
+    background-color: #1F2937 !important;
+}
+
+.dark-mode .text-gray-800 {
+    color: #F3F4F6 !important;
+}
+
+/* Additional Custom Styles */
+.step-number {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.faq-question svg {
+    transition: transform 0.3s ease;
+}
+
+.faq-question[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    transition: all 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.faq-answer.active {
+    max-height: 500px;
+}
+
+.security-feature:hover {
+    transform: translateY(-5px);
+}
+
+.benefit-card:hover {
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1);
+}
+
+.payment-method:hover {
+    transform: translateY(-5px);
+}
+
+.investment-card:hover {
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1);
+}
+
+.activity-item:hover {
+    transform: translateX(5px);
+}
+
+/* Animation Classes */
+.animate-bounce-slow {
+    animation: bounce-slow 3s infinite;
+}
+
+@keyframes bounce-slow {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 4s infinite;
+}
+
+@keyframes pulse-slow {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+.animate-rotate-slow {
+    animation: rotate-slow 8s linear infinite;
+}
+
+@keyframes rotate-slow {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Loading Animation for Buttons */
+.btn-loading {
+    position: relative;
+}
+
+.btn-loading::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: 4px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: button-loading-spinner 1s ease infinite;
+}
+
+@keyframes button-loading-spinner {
+    from {
+        transform: rotate(0turn);
+    }
+    to {
+        transform: rotate(1turn)}
+
+}

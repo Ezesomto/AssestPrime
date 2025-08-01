@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en" data-layout="vertical" data-layout-mode="dark" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Asset Alchemy - Deposit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="../images/favicon.png">
+
+    <!-- Bootstrap Css -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="../css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="../css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="../css/custom.min.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fadeOut {
+            animation: fadeOut 0.5s;
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+        
+        /* Wallet address display */
+        .wallet-display {
+            background-color: #2a3042;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+            font-family: monospace;
+            word-break: break-all;
+            color: #fff;
+        }
+        
+        .copy-btn {
+            cursor: pointer;
+            color: #0d6efd;
+            margin-left: 10px;
+        }
+        
+        /* Dark theme adjustments */
+        body[data-layout-mode="dark"] .card {
+            background-color: #2a3042;
+            border-color: #2a3042;
+        }
+        
+        body[data-layout-mode="dark"] .form-control,
+        body[data-layout-mode="dark"] .form-select {
+            background-color: #30384d;
+            border-color: #3b4253;
+            color: #e9ecef;
+        }
+        
+        body[data-layout-mode="dark"] .text-muted {
+            color: #a1a7bb !important;
+        }
+        
+        /* Fixed footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            left: 250px;
+            height: 50px;
+            padding: 15px;
+            background-color: #2a3042;
+            border-top: 1px solid #3b4253;
+            z-index: 100;
+        }
+        
+        @media (max-width: 991.98px) {
+            .footer {
+                left: 0;
+            }
+        }
+        
+        /* Main content padding adjustment for footer */
+        .page-content {
+            padding-bottom: 70px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Notification div -->
+<div id="notification" class="notification"></div>
+
+<!-- Begin page -->
+<div id="layout-wrapper">
+
+    <!-- [Your existing header and sidebar code remains the same] -->
+
+    <header id="page-topbar">
+        <div class="layout-width">
+            <div class="navbar-header">
+                <div class="d-flex">
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box horizontal-logo">
+                        <a href="dashboard.html" class="logo logo-light.png">
+                        <span class="logo-sm">
+                            <img src="/images/favicon.png" alt="" height="22">
+                        </span>
+                            <span class="logo-lg">
+                            <img src="/images/logo-light.png" alt="" height="30">
+                        </span>
+                        </a>
+
+                        <a href="dashboard.html" class="logo logo-light">
+                        <span class="logo-sm">
+                            <img src="/images/favicon.png" alt="" height="22">
+                        </span>
+                            <span class="logo-lg">
+                            <img src="/images/logo-light.png" alt="" height="30">
+                        </span>
+                        </a>
+                    </div>
+
+                    <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger shadow-none" id="topnav-hamburger-icon">
+                    <span class="hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                    </button>
+                </div>
+
+                <div class="d-flex align-items-center">
+
+                    <div class="ms-1 header-item d-none d-sm-flex">
+                        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" data-toggle="fullscreen">
+                            <i class='bx bx-fullscreen fs-22'></i>
+                        </button>
+                    </div>
+
+                    <div class="ms-1 header-item d-none d-sm-flex">
+                        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-logo-light.png-mode shadow-none">
+                            <i class='bx bx-moon fs-22'></i>
+                        </button>
+                    </div>
+
+                    <div class="dropdown ms-sm-3 header-item topbar-user">
+                        <button type="button" class="btn shadow-none" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="d-flex align-items-center">
+                            <img class="rounded-circle header-profile-user" src="/images/avatar-1.png" alt="Header Avatar">
+                            <span class="text-start ms-xl-2">
+                                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text"></span>
+                                <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">Investor</span>
+                            </span>
+                        </span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <!-- item-->
+                            <h6 class="dropdown-header">Welcome User!</h6>
+                            <a class="dropdown-item" href="javascript:;"><i class="ri-wallet-2-line text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Balance : <b>$0.0</b></span></a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="settings.html"><i class="ri-account-circle-line text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Profile</span></a>
+                            <a class="dropdown-item" href="settings.html"><i class="ri-lock-line text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Password</span></a>
+                            <a class="dropdown-item" href="javascript: void(0)" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="ri-shut-down-line text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">Logout</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ========== App Menu ========== -->
+    <div class="app-menu navbar-menu">
+        <!-- LOGO -->
+        <div class="navbar-brand-box">
+            <!-- logo-light.png Logo-->
+            <a href="dashboard.html" class="logo-light.png">
+                    <span class="logo-sm">
+                        <img src="/images/favicon.png" alt="" height="22">
+                    </span>
+                <span class="logo-lg">
+                        <img src="#" alt="" height="30">
+                    </span>
+            </a>
+            <!-- Light Logo-->
+            <a href="dashboard.html" class="logo logo-light">
+                    <span class="logo-sm">
+                        <img src="/images/favicon.png" alt="" height="22">
+                    </span>
+                <span class="logo-lg">
+                        <img src="#" alt="" height="30">
+                    </span>
+            </a>
+            <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
+                <i class="ri-record-circle-line"></i>
+            </button>
+        </div>
+
+        <div id="scrollbar">
+            <div class="container-fluid">
+
+                <div id="two-column-menu">
+                </div>
+                <ul class="navbar-nav" id="navbar-nav">
+                    
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="dashboard.html">
+                            <i class="ri-dashboard-line"></i> <span data-key="t-dashboards">Dashboard</span>
+                        </a>
+                    </li> <!-- end Dashboard Menu -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="referral.html">
+                            <i class="ri-team-line"></i> <span data-key="t-apps">Referral</span>
+                        </a>
+                    </li>
+
+                    
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="deposits.html">
+                            <i class="ri-download-2-line"></i> <span data-key="t-apps">Deposit</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="request-withdrawal.html">
+                            <i class="ri-upload-2-line"></i> <span data-key="t-apps">Withdraw</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="reinvest.html">
+                            <i class="ri-wallet-3-line"></i> <span data-key="t-apps">Reinvest</span>
+                        </a>
+                    </li>
+
+                    
+
+                    
+
+                   
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#sidebarAuth" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
+                            <i class="ri-history-line"></i> <span data-key="t-authentication">History</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="sidebarAuth">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="deposits.html" class="nav-link"> Deposits
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="withdrawals.html" class="nav-link"> Withdrawals
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="payouts.html" class="nav-link">Earnings
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="javascript: void(0)" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="ri-shut-down-line"></i> <span data-key="t-pages">Sign out</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Sidebar -->
+        </div>
+
+        <div class="sidebar-background"></div>
+    </div>
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0">Deposit</h4>
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">Deposit</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+
+                <div class="row">
+                    <div class="col-xxl-6">
+                        <div class="card">
+                            <div class="card-header align-items-center d-flex">
+                                <h4 class="card-title mb-0 flex-grow-1">Deposit</h4>
+                            </div>
+                            
+                            <div class="card-body">
+                                <p class="text-muted">Fill the form to start your deposit process.</p>
+                                <div class="live-preview">
+                                    <form id="depositForm" method="POST" action="#" enctype="multipart/form-data">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="plan" class="form-label">Plan</label>
+                                                    <select id="plan" name="plan" class="form-select" required>
+                                                        <option value="">Choose plan...</option>
+                                                        <option value="plan_a">Plan A (5%)</option>
+                                                        <option value="plan_b">Plan B (6.5%)</option>
+                                                        <option value="plan_c">Plan C (10%)</option>
+                                                        <option value="plan_d">Plan D (12%)</option>
+                                                        <option value="plan_e">Plan E (14.5%)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="percentage" class="form-label">Percent interest</label>
+                                                    <input type="text" class="form-control" id="percentage" readonly>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="minimum" class="form-label">Minimum amount</label>
+                                                    <input type="text" class="form-control" id="minimum" readonly>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="maximum" class="form-label">Maximum amount</label>
+                                                    <input type="text" class="form-control" id="maximum" readonly>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="duration" class="form-label">Duration</label>
+                                                    <input type="text" class="form-control" id="duration" readonly>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="amount" class="form-label">Amount ($)</label>
+                                                    <input type="number" name="amount" class="form-control" id="amount" required>
+                                                    <div id="amountError" class="text-danger small mt-1" style="display:none;"></div>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="profit" class="form-label">Profit</label>
+                                                    <input type="text" class="form-control" id="profit" readonly>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="total" class="form-label">Total</label>
+                                                    <input type="text" class="form-control" id="total" readonly>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="currency" class="form-label">Payment Method</label>
+                                                    <select id="currency" name="currency" class="form-select" required>
+                                                        <option value="">Choose method...</option>
+                                                        <option value="BTC">Bitcoin (BTC)</option>
+                                                        <option value="ETH">Ethereum (ETH)</option>
+                                                        <option value="USDT_TRC20">Tether (USDT TRC20)</option>
+                                                        <option value="USDT_ERC20">Tether (USDT ERC20)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-md-12" id="walletAddressContainer" style="display:none;">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Deposit Address</label>
+                                                    <div class="wallet-display">
+                                                        <span id="walletAddress"></span>
+                                                        <span class="copy-btn" onclick="copyToClipboard()">Copy</span>
+                                                    </div>
+                                                    <small class="text-muted">Send only the selected cryptocurrency to this address</small>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-lg-12">
+                                                <div class="text-end">
+                                                    <button type="submit" class="btn btn-primary">Submit Deposit</button>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                        </div>
+                                        <!--end row-->
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end row-->
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        &copy; <script>document.write(new Date().getFullYear())</script> Asset Alchemy. All Rights Reserved.
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<!-- END layout-wrapper -->
+
+<!-- JAVASCRIPT -->
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/app.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+// Plan configuration
+const plans = {
+    plan_a: { 
+        min: 500, 
+        max: 2999, 
+        profit: "5%",
+        duration: "7 days"
+    },
+    plan_b: { 
+        min: 1000, 
+        max: 4999, 
+        profit: "6.5%",
+        duration: "7 days"
+    },
+    plan_c: { 
+        min: 5000, 
+        max: 11999, 
+        profit: "10%",
+        duration: "7 days"
+    },
+    plan_d: { 
+        min: 10000, 
+        max: 49999, 
+        profit: "12%",
+        duration: "7 days"
+    },
+    plan_e: { 
+        min: 100000, 
+        max: 499999, 
+        profit: "14.5%",
+        duration: "7 days"
+    }
+};
+
+// Wallet addresses for each payment method
+const walletAddresses = {
+    BTC: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
+    ETH: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
+    USDT_TRC20: "TNPZq5YFMvQ5Y7XZ5q5Z5q5Z5q5Z5q5Z5q5",
+    USDT_ERC20: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+};
+
+// Initialize form when DOM is loaded
+$(document).ready(function() {
+    // When plan is selected
+    $('#plan').change(function() {
+        const selectedPlan = $(this).val();
+        
+        if (selectedPlan && plans[selectedPlan]) {
+            // Update plan details
+            $('#percentage').val(plans[selectedPlan].profit);
+            $('#minimum').val('$' + plans[selectedPlan].min.toLocaleString());
+            $('#maximum').val('$' + plans[selectedPlan].max.toLocaleString());
+            $('#duration').val(plans[selectedPlan].duration);
+            
+            // Set amount placeholder
+            $('#amount').attr('placeholder', '$' + plans[selectedPlan].min + ' - $' + plans[selectedPlan].max);
+            
+            // Clear previous values
+            $('#amount').val('');
+            $('#profit').val('');
+            $('#total').val('');
+            $('#amountError').hide();
+        }
+    });
+    
+    // When payment method is selected
+    $('#currency').change(function() {
+        const selectedCurrency = $(this).val();
+        const walletContainer = $('#walletAddressContainer');
+        
+        if (selectedCurrency && walletAddresses[selectedCurrency]) {
+            $('#walletAddress').text(walletAddresses[selectedCurrency]);
+            walletContainer.show();
+        } else {
+            walletContainer.hide();
+        }
+    });
+    
+    // When amount is entered
+    $('#amount').on('input', function() {
+        calculateProfit();
+    });
+    
+    // Form submission
+    $('#depositForm').submit(function(e) {
+        e.preventDefault();
+        
+        // Validate amount
+        const selectedPlan = $('#plan').val();
+        const amount = parseFloat($('#amount').val()) || 0;
+        
+        if (!selectedPlan || !plans[selectedPlan]) {
+            showNotification('Please select a plan first', 'danger');
+            return;
+        }
+        
+        if (amount < plans[selectedPlan].min || amount > plans[selectedPlan].max) {
+            $('#amountError').text('Amount must be between $' + plans[selectedPlan].min + ' and $' + plans[selectedPlan].max);
+            $('#amountError').show();
+            return;
+        }
+        
+        // Show success notification
+        showNotification('Your investment is pending. Thank you for your deposit!', 'success');
+        
+        // Here you would normally submit the form to your server
+        // For demo purposes, we'll just reset the form
+        this.reset();
+        $('#percentage').val('');
+        $('#minimum').val('');
+        $('#maximum').val('');
+        $('#duration').val('');
+        $('#profit').val('');
+        $('#total').val('');
+        $('#amountError').hide();
+        $('#walletAddressContainer').hide();
+    });
+});
+
+// Calculate profit based on amount
+function calculateProfit() {
+    const selectedPlan = $('#plan').val();
+    const amount = parseFloat($('#amount').val()) || 0;
+    
+    if (!selectedPlan || !plans[selectedPlan]) return;
+    
+    // Get interest rate (remove % sign)
+    const interestRate = parseFloat(plans[selectedPlan].profit) / 2;
+    
+    // Calculate profit and total
+    const profit = amount * interestRate;
+    const total = amount + profit;
+    
+    // Update fields
+    $('#profit').val('$' + profit.toFixed(2));
+    $('#total').val('$' + total.toFixed(2));
+    
+    // Validate amount range
+    if (amount < plans[selectedPlan].min || amount > plans[selectedPlan].max) {
+        $('#amountError').text('Amount must be between $' + plans[selectedPlan].min + ' and $' + plans[selectedPlan].max);
+        $('#amountError').show();
+    } else {
+        $('#amountError').hide();
+    }
+}
+
+// Show notification message
+function showNotification(message, type = 'success') {
+    const notification = $('#notification');
+    notification.text(message);
+    
+    // Set background color based on type
+    if (type === 'success') {
+        notification.css('background-color', '#28a745');
+    } else if (type === 'danger') {
+        notification.css('background-color', '#dc3545');
+    }
+    
+    // Show notification
+    notification.fadeIn();
+    
+    // Hide after 5 seconds
+    setTimeout(function() {
+        notification.addClass('fadeOut');
+        setTimeout(function() {
+            notification.hide().removeClass('fadeOut');
+        }, 500);
+    }, 5000);
+}
+
+// Copy wallet address to clipboard
+function copyToClipboard() {
+    const walletAddress = $('#walletAddress').text();
+    navigator.clipboard.writeText(walletAddress).then(function() {
+        showNotification('Wallet address copied to clipboard!');
+    }, function() {
+        showNotification('Failed to copy address', 'danger');
+    });
+}
+</script>
+
+</body>
+</html>
